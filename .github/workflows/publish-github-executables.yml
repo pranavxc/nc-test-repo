@@ -49,12 +49,12 @@ jobs:
       - run: |
           npm i
           npm run build
-          ls
+          ls dist
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.NC_GITHUB_TOKEN }}
-          file: target/dist/**
+          file: dist/**
           tag: ${{ github.ref }}
           overwrite: true
           file_glob: true
