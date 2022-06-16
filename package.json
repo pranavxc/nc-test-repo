@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
     "upgrade": "npm uninstall --save nocodb && npm install --save nocodb",
-    "build": "npx pkg . --out-path dist"
+    "build": "npx pkg . --out-path dist --compress GZip"
   },
   "pkg": {
     "assets": [
