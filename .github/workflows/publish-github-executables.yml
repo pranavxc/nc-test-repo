@@ -9,7 +9,7 @@ on:
     inputs:
       tag:
         description: "Target Tag"
-        required: false
+        required: true
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -40,7 +40,6 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               ref: "refs/tags/${{ github.event.inputs.tag || inputs.tag }}",
-              sha: "${{steps.get-sha.outputs.TARGET_SHA}}"
             })
 
       - uses: actions/setup-node@v3
