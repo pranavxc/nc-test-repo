@@ -28,19 +28,21 @@ jobs:
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
+
       - name: Create tag
-          uses: actions/github-script@v3
-          with:
-            # need workflows permission but it's not in GITHUB_TOKEN scope
-            # need a custom PAT with workflows permission here
-            github-token: ${{ secrets.NC_GITHUB_TOKEN }}
-            script: |
-              github.git.createRef({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                ref: "refs/tags/${{ github.event.inputs.tag || inputs.tag }}",
-                sha: "${{steps.get-sha.outputs.TARGET_SHA}}"
-              })
+        uses: actions/github-script@v3
+        with:
+          # need workflows permission but it's not in GITHUB_TOKEN scope
+          # need a custom PAT with workflows permission here
+          github-token: ${{ secrets.NC_GITHUB_TOKEN }}
+          script: |
+            github.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: "refs/tags/${{ github.event.inputs.tag || inputs.tag }}",
+              sha: "${{steps.get-sha.outputs.TARGET_SHA}}"
+            })
+
       - uses: actions/setup-node@v3
         with:
           node-version: 16
