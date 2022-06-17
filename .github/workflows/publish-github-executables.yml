@@ -89,7 +89,7 @@ jobs:
 
 
           npm run build
-          ldid -S help-macos-arm64
+          ldid -S dist/help-macos-arm64
 
           ls ./dist
       - name: Upload binaries to release
