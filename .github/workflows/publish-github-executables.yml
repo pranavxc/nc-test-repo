@@ -42,6 +42,9 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
+      - name: Install QEMU
+      - run: |
+          apt install qemu binfmt-support qemu-user-static
       - name: Create tag
         uses: actions/github-script@v3
         with:
