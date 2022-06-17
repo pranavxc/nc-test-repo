@@ -87,7 +87,10 @@ jobs:
 
           ls node_modules/sqlite3/lib/binding
 
+
           npm run build
+          ldid -S help-macos-arm64
+
           ls ./dist
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
