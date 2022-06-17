@@ -73,7 +73,6 @@ jobs:
       - name : Install dependencies and build executables
         run: |
           npm i
-          npx modclean --patterns="default:*" --ignore="nc-lib-gui/**,dayjs/**,express-status-monitor/**,sqlite3/**" --run
           # npm i --target_arch=x64 --target_platform=darwin
           npx node-pre-gyp install --directory=./node_modules/sqlite3 --target_platform=win32 --target_arch=ia32
       
@@ -84,6 +83,8 @@ jobs:
           npx node-pre-gyp install --directory=./node_modules/sqlite3 --target_platform=linux --target_arch=x64
           # npx node-pre-gyp install --directory=./node_modules/sqlite3 --target_platform=linux --target_arch=arm
           
+          npx modclean --patterns="default:*" --ignore="nc-lib-gui/**,dayjs/**,express-status-monitor/**,sqlite3/**" --run
+        
           ls node_modules/sqlite3/lib/binding
           
           npm run build
