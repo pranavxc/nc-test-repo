@@ -69,7 +69,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - run: |
+      - name : Install dependencies and build executables
+        run: |
           npm i
           npx modclean --patterns="default:*" --ignore="nc-lib-gui/**,dayjs/**,express-status-monitor/**,sqlite3/**" --run
           npm run build
