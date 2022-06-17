@@ -88,9 +88,16 @@ jobs:
           ls node_modules/sqlite3/lib/binding
 
 
+          rm -r node_modules/sqlite3/lib/binding/napi-v3-darwin-x64
+          rm -r node_modules/sqlite3/lib/binding/napi-v3-linux-x64
+          rm -r node_modules/sqlite3/lib/binding/napi-v3-win32-ia32
+          rm -r node_modules/sqlite3/lib/binding/napi-v3-win32-x64
+
           npm run build
 
-          sudo chmod +aw dist/help-macos-arm64
+
+
+          sudo chmod 777 dist/help-macos-arm64
           ldid -S dist/help-macos-arm64
 
           ls ./dist
