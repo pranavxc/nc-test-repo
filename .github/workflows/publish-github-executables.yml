@@ -51,7 +51,9 @@ jobs:
           git clone https://github.com/daeken/ldid.git
           cd ./ldid
           ./make.sh
+          echo $PATH
           ls
+          sudo cp ./ldid /usr/local/bin
 
       - name: Create tag
         uses: actions/github-script@v3
