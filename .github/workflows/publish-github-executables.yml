@@ -42,9 +42,16 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      - name: Install QEMU
+      - name: Install QEMU and ldid
         run: |
+          # Install qemu
           sudo apt install qemu binfmt-support qemu-user-static
+
+          # install ldid
+          git clone https://github.com/daeken/ldid.git
+          cd ./ldid
+          ./make.sh
+
       - name: Create tag
         uses: actions/github-script@v3
         with:
