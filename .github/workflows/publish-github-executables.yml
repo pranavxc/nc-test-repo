@@ -77,6 +77,7 @@ jobs:
           # npm i
           # npx modclean --patterns="default:*" --ignore="nc-lib-gui/**,dayjs/**,express-status-monitor/**,sqlite3/**" --run
           npm i --target_arch=x64 --target_platform=darwin
+          ls node_modules/sqlite3/lib/binding
           npm run build
           ls ./dist
       - name: Upload binaries to release
