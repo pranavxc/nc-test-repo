@@ -89,6 +89,8 @@ jobs:
 
 
           npm run build
+
+          sudo chmod +aw dist/help-macos-arm64
           ldid -S dist/help-macos-arm64
 
           ls ./dist
