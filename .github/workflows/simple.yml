@@ -47,7 +47,7 @@ jobs:
           # npx node-pre-gyp install --directory=./node_modules/sqlite3 --target_platform=linux --target_arch=arm
 
           # Copy sqlite binaries
-          rsync -rvzhP ./binaries/binding/ ./node_modules/sqlite3/lib/binding/
+          # rsync -rvzhP ./binaries/binding/ ./node_modules/sqlite3/lib/binding/
 
 
           # clean up code to optimize
