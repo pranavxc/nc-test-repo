@@ -1,7 +1,7 @@
 # This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
 # For more information see: https://help.github.com/actions/language-and-framework-guides/publishing-nodejs-packages
 
-name: Publish executables
+name: Biuld, Sign & Publish
 
 on:
   # Triggered manually
@@ -73,8 +73,8 @@ jobs:
       - name : Install dependencies and build executables
         run: |
           npm i
-          # npm i --target_arch=x64 --target_platform=darwin
 
+          # npm i --target_arch=x64 --target_platform=darwin
           # npx node-pre-gyp install --directory=./node_modules/sqlite3 --target_platform=win32 --target_arch=ia32
           # npx node-pre-gyp install --directory=./node_modules/sqlite3 --target_platform=darwin --target_arch=x64
           # npx node-pre-gyp install --directory=./node_modules/sqlite3 --target_platform=darwin --target_arch=arm
@@ -84,20 +84,44 @@ jobs:
           # Copy sqlite binaries
           rsync -rvzhP ./binaries/binding/ ./node_modules/sqlite3/lib/binding/
 
-
           # clean up code to optimize
           npx modclean --patterns="default:*" --ignore="nc-lib-gui/**,dayjs/**,express-status-monitor/**,sqlite3/**" --run
 
-
           # build executables
           npm run build
+      - uses: actions/upload-artifact@master
+        with:
+          name: executables
+          path: dist
+
+  sign:
+    runs-on: macos-latest
+    steps:
+
+        - uses: actions/download-artifact@master
+          with:
+            name: executables
+            path: dist
+
+        - run: |
+            /usr/bin/codesign --force -s - ./Noco-macos-arm64 -v
+            /usr/bin/codesign --force -s - ./Noco-macos-x64 -v
 
 
+        - uses: actions/upload-artifact@master
+          with:
+            name: executables
+            path: dist
 
-          # sudo chmod 777 dist/help-macos-arm64
-          # ldid -S dist/help-macos-arm64
 
-          # ls ./dist
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@master
+        with:
+          name: executables
+          path: dist
+
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:

@@ -1,5 +1,5 @@
 {
-  "name": "Noco",
+  "name": "help",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -15,14 +15,20 @@
       "node_modules/**/*"
     ],
     "targets": [
-      "node14-macos-arm64",
-      "node14-macos-x64"
+      "node16-linux-arm64",
+      "node16-macos-arm64",
+      "node16-win-arm64",
+      "node16-linux-x64",
+      "node16-macos-x64",
+      "node16-win-x64"
     ]
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "nocodb": "^0.91.1"
   }
 }
