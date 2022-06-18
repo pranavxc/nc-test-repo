@@ -81,11 +81,12 @@ jobs:
           # npx node-pre-gyp install --directory=./node_modules/sqlite3 --target_platform=linux --target_arch=x64
           # npx node-pre-gyp install --directory=./node_modules/sqlite3 --target_platform=linux --target_arch=arm
 
-          rsync -rvzhP ./binaries/binding/ ./node_modules/sqlite3/lib/binding/
+          # rsync -rvzhP ./binaries/binding/ ./node_modules/sqlite3/lib/binding/
 
-          npx modclean --patterns="default:*" --ignore="nc-lib-gui/**,dayjs/**,express-status-monitor/**,sqlite3/**" --run
 
-          ls node_modules/sqlite3/lib/binding
+          #npx modclean --patterns="default:*" --ignore="nc-lib-gui/**,dayjs/**,express-status-monitor/**,sqlite3/**" --run
+
+          #ls node_modules/sqlite3/lib/binding
 
 
           # rm -r node_modules/sqlite3/lib/binding/napi-v3-darwin-x64
