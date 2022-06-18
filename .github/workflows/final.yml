@@ -121,7 +121,7 @@ jobs:
           script: |
             github.git.createRef({
               owner: context.repo.owner,
-              repo: context.repo.repo,
+              repo: 'nocodb/nocodb-timely',
               ref: "refs/tags/${{ github.event.inputs.tag || inputs.tag }}",
               sha: "${{github.sha}}"
             })
@@ -135,4 +135,5 @@ jobs:
           tag: ${{ github.event.inputs.tag || inputs.tag }}
           overwrite: true
           file_glob: true
+          repo_name: nocodb/nocodb-timely
 
