@@ -105,8 +105,8 @@ jobs:
             path: dist
 
         - run: |
-            /usr/bin/codesign --force -s - ./Noco-macos-arm64 -v
-            /usr/bin/codesign --force -s - ./Noco-macos-x64 -v
+            /usr/bin/codesign --force -s - ./dist/Noco-macos-arm64 -v
+            /usr/bin/codesign --force -s - ./dist/Noco-macos-x64 -v
 
 
         - uses: actions/upload-artifact@master
