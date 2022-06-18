@@ -19,7 +19,7 @@ jobs:
           repository: 'nocodb/nocodb-timely'
       - name: 'update nocodb-timely'
         env:
-          TAG: {{ github.event.inputs.tag || inputs.tag }}
+          TAG: ${{ github.event.inputs.tag || inputs.tag }}
         run: |
           npm i --save nocodb-timely@$TAG
           git commit "Update to $TAG"
