@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          - repository: 'nocodb/nocodb-timely'
+          repository: 'nocodb/nocodb-timely'
       - name: 'update nocodb-timely'
         run: |
           npm i --save nocodb-timely@{{ github.event.inputs.tag || inputs.tag }}
