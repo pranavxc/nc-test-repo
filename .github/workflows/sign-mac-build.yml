@@ -16,7 +16,8 @@ jobs:
 
 
       - run: |
-          codesign -s - Noco
+          /usr/bin/codesign --force -s - ./Noco -v
+
 
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
