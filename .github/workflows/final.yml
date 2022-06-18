@@ -96,6 +96,7 @@ jobs:
 
   sign:
     runs-on: macos-latest
+    needs: build
     steps:
 
         - uses: actions/download-artifact@master
@@ -115,6 +116,7 @@ jobs:
 
 
   publish:
+    needs: sign
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@master
