@@ -22,5 +22,5 @@ jobs:
           TAG: ${{ github.event.inputs.tag || inputs.tag }}
         run: |
           npm i --save nocodb-sdk-daily@$TAG
-          git commit "Update to $TAG"
+          git commit package.json -m "Update to $TAG"
           git push
