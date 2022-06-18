@@ -121,7 +121,7 @@ jobs:
           script: |
             github.git.createRef({
               owner: context.repo.owner,
-              repo: 'nocodb/nocodb-timely',
+              repo: "nocodb/nocodb-timely",
               ref: "refs/tags/${{ github.event.inputs.tag || inputs.tag }}",
               sha: "${{github.sha}}"
             })
