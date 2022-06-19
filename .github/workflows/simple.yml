@@ -133,8 +133,6 @@ jobs:
             path: mac-dist
 
         - run: |
-            ls
-            ls dist
             /usr/bin/codesign --force -s - ./dist/Noco-macos-arm64 -v
             /usr/bin/codesign --force -s - ./dist/Noco-macos-x64 -v
         - uses: actions/upload-artifact@master
