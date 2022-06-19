@@ -155,8 +155,8 @@ jobs:
           path: mac-dist
       - name: Compress files
         run: |
-          GZIP=-9 tar -czvf ./dist/Noco-macos-x64.tar.gz ./dist/Noco-macos-x64
-          GZIP=-9 tar -czvf ./dist/Noco-macos-arm64.tar.gz ./dist/Noco-macos-arm64
+          GZIP=-9 tar -czvf ./mac-dist/Noco-macos-x64.tar.gz ./mac-dist/Noco-macos-x64
+          GZIP=-9 tar -czvf ./mac-dist/Noco-macos-arm64.tar.gz ./mac-dist/Noco-macos-arm64
 
       - name: Upload mac executables to release
         uses: svenstaro/upload-release-action@v2
