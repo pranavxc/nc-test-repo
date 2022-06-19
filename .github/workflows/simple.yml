@@ -101,7 +101,8 @@ jobs:
           # ls ./dist
           
           mkdir ./mac-dist
-          mv ./dist/help-macos-* ./mac-dist/
+          mv ./dist/Noco-macos-arm64 ./mac-dist/
+          mv ./dist/Noco-macos-x64 ./mac-dist/
           
       - name: Upload executables to release
         uses: svenstaro/upload-release-action@v2
