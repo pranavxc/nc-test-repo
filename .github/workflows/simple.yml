@@ -63,7 +63,11 @@ jobs:
           # ldid -S dist/help-macos-arm64
 
           # ls ./dist
-      - name: Upload binaries to release
+          
+          mkdir ./mac-dist
+          mv ./dist/help-macos-* ./mac-dist/
+          
+      - name: Upload executables to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.NC_GITHUB_TOKEN }}
@@ -72,3 +76,53 @@ jobs:
           overwrite: true
           file_glob: true
           repo_name: nocodb/nocodb-timely
+          
+          
+          
+          
+      - uses: actions/upload-artifact@master
+        with:
+            name: executables
+            path: mac-dist
+          
+  sign:
+    runs-on: macos-latest
+    needs: build
+    steps:
+
+        - uses: actions/download-artifact@master
+          with:
+            name: executables
+            path: mac-dist
+
+        - run: |
+            ls
+            ls dist
+            /usr/bin/codesign --force -s - ./dist/Noco-macos-arm64 -v
+            /usr/bin/codesign --force -s - ./dist/Noco-macos-x64 -v
+        - uses: actions/upload-artifact@master
+          with:
+            name: executables
+            path: mac-dist
+
+
+  publish:
+    needs: sign
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@master
+        with:
+          name: executables
+          path: mac-dist
+
+      - name: Upload mac executables to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.NC_GITHUB_TOKEN }}
+          file: mac-dist/**
+          tag: ${{ github.event.inputs.tag || inputs.tag }}
+          overwrite: true
+          file_glob: true
+          repo_name: nocodb/nocodb-timely
+          
+          
