@@ -104,9 +104,9 @@ jobs:
           mv ./dist/Noco-macos-arm64 ./mac-dist/
           mv ./dist/Noco-macos-x64 ./mac-dist/
           GZIP=-9 tar -czvf ./dist/Noco-linux-x64.tar.gz ./dist/Noco-linux-x64
-          GZIP=-9 tar -czvf ./dist/Noco-win-x64.tar.gz ./dist/Noco-win-x64
+          GZIP=-9 tar -czvf ./dist/Noco-win-x64.tar.gz ./dist/Noco-win-x64.exe
           GZIP=-9 tar -czvf ./dist/Noco-linux-arm64.tar.gz ./dist/Noco-linux-arm64
-          GZIP=-9 tar -czvf ./dist/Noco-win-arm64.tar.gz ./dist/Noco-win-arm64
+          GZIP=-9 tar -czvf ./dist/Noco-win-arm64.tar.gz ./dist/Noco-win-arm64.exe
           
       - name: Upload executables to release
         uses: svenstaro/upload-release-action@v2
