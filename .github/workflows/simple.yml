@@ -103,6 +103,7 @@ jobs:
           mkdir ./mac-dist
           mv ./dist/Noco-macos-arm64 ./mac-dist/
           mv ./dist/Noco-macos-x64 ./mac-dist/
+          tar -czvf ./dist/Noco-linux-x64.tar.gz ./dist/Noco-linux-x64
           
       - name: Upload executables to release
         uses: svenstaro/upload-release-action@v2
