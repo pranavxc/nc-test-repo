@@ -58,7 +58,7 @@ jobs:
         env:
           TAG: ${{ github.event.inputs.tag || inputs.tag }}
         run: |
-          npm i --save nocodb-daily@$TAG
+          npm i -E nocodb-daily@$TAG
 
           git config --global user.name "Pranav C"
           git config --global user.email "pranavxc@gmail.com"
