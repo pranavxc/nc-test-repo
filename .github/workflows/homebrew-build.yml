@@ -77,7 +77,10 @@ jobs:
           # sudo chmod 777 dist/help-macos-arm64
           # ldid -S dist/help-macos-arm64
 
-          # ls ./dist
+          ls
+          ls ./dist
+          
+          
           
           mkdir ./mac-dist
           mv ./dist/Noco-macos-arm64 ./mac-dist/
