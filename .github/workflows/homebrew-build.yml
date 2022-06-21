@@ -127,6 +127,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          path: 'main'
+      
+      - uses: actions/checkout@v3
+        with:
+          path: 'homebrew-nocodb'
+          token: ${{ secrets.NC_GITHUB_TOKEN }}
+          repository: 'nocodb/homebrew-nocodb'
       - uses: actions/download-artifact@master
         with:
           name: executables
@@ -155,20 +163,21 @@ jobs:
           end
           EOF
           )
-          printf "$FORMULA_CLASS_STR" >> Formula/noco.rb
-          echo "${{ steps.compress.outputs.CHECKSUM }}"
+          
+          
+          printf "$FORMULA_CLASS_STR" >> main/Formula/noco.rb
+          printf "$FORMULA_CLASS_STR" >> homebrew-nocodb/Formula/noco.rb
+          
           
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
           
+          cd ./main
           git commit Formula/noco.rb -m "Update formula"
           git tag ${{ github.event.inputs.tag || inputs.tag }}
           git push origin master --tags
           
           
-          git clone https://.:${{ secrets.NC_GITHUB_TOKEN }}@github.com/nocodb/homebrew-nocodb 
-          \cp -f ./Formula/noco.rb ./homebrew-nocodb/Formula/noco.rb
-          mv ./homebrew-nocodb ../homebrew-nocodb
           cd ../homebrew-nocodb
           git commit ./Formula/noco.rb -m "Automatic publish"
           git push origin master
