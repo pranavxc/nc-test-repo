@@ -127,7 +127,7 @@ jobs:
         with:
           path: 'homebrew-nocodb'
           token: ${{ secrets.NC_GITHUB_TOKEN }}
-          repository: 'nocodb/homebrew-nocodb'
+          repository: 'nocodb/homebrew-noco'
           fetch-depth: 0
       - uses: actions/download-artifact@master
         with:
@@ -145,11 +145,11 @@ jobs:
           FORMULA_CLASS_STR=$(cat << EOF
           class Getfilesize < Formula
             desc "Get Human Readable file size information. - CLI"
-            homepage "https://github.com/bharathvaj-ganesan/getfilesize-cli"
+            homepage "https://github.com/nocodb"
             url "https://github.com/pranavxc/nc-test-repo/releases/download/${{ github.event.inputs.tag || inputs.tag }}/noco.tar.gz"
             sha256 "${{ steps.compress.outputs.CHECKSUM }}"
             license "MIT"
-            version "1.0.1"
+            version "${{ github.event.inputs.tag || inputs.tag }}"
 
             def install
               bin.install "noco"
@@ -157,7 +157,6 @@ jobs:
           end
           EOF
           )
-          
           
           printf "$FORMULA_CLASS_STR" > main/Formula/noco.rb
           printf "$FORMULA_CLASS_STR" > homebrew-nocodb/Formula/noco.rb
