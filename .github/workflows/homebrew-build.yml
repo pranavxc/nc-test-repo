@@ -175,8 +175,9 @@ jobs:
           
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
-          
+          ls
           cd ./main
+          ls
           git commit Formula/noco.rb -m "Update formula"
           git tag ${{ github.event.inputs.tag || inputs.tag }}
           git push origin master --tags
