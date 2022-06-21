@@ -83,8 +83,8 @@ jobs:
           
           
           mkdir ./mac-dist
-          mv ./dist/Noco-macos-arm64 ./mac-dist/
-          mv ./dist/Noco-macos-x64 ./mac-dist/
+          mv ./dist/Noco-arm64 ./mac-dist/
+          mv ./dist/Noco-x64 ./mac-dist/
           
       - name: Upload executables to release
         uses: svenstaro/upload-release-action@v2
@@ -115,8 +115,8 @@ jobs:
             path: mac-dist
 
         - run: |
-            /usr/bin/codesign --force -s - ./mac-dist/Noco-macos-arm64 -v
-            /usr/bin/codesign --force -s - ./mac-dist/Noco-macos-x64 -v
+            /usr/bin/codesign --force -s - ./mac-dist/Noco-arm64 -v
+            /usr/bin/codesign --force -s - ./mac-dist/Noco-x64 -v
         - uses: actions/upload-artifact@master
           with:
             name: executables
@@ -133,7 +133,7 @@ jobs:
           path: mac-dist
       - name: Compress files
         run: |
-          mv ./mac-dist/Noco-macos-x64 ./mac-dist/noco
+          mv ./mac-dist/Noco-x64 ./mac-dist/noco
           tar -czf ./mac-dist/noco.tar.gz ./mac-dist/noco
           echo "::set-output name=CHECKSUM::$(shasum -a 256 noco.tar.gz)"
         id: compress
