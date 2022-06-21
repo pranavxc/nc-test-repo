@@ -159,8 +159,8 @@ jobs:
           )
           
           
-          printf "$FORMULA_CLASS_STR" >> main/Formula/noco.rb
-          printf "$FORMULA_CLASS_STR" >> homebrew-nocodb/Formula/noco.rb
+          printf "$FORMULA_CLASS_STR" > main/Formula/noco.rb
+          printf "$FORMULA_CLASS_STR" > homebrew-nocodb/Formula/noco.rb
           
         
           cd ./main
