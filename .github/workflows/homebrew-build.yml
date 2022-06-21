@@ -94,7 +94,6 @@ jobs:
           tag: ${{ github.event.inputs.tag || inputs.tag }}
           overwrite: true
           file_glob: true
-          repo_name: nocodb/nocodb-timely
           
           
           
