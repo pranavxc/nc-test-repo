@@ -15,9 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.NC_GITHUB_TOKEN }}
-          repository: 'nocodb/nocodb-timely'
       - name: Cache node modules
         id: cache-npm
         uses: actions/cache@v3
@@ -54,18 +51,7 @@ jobs:
           ./make.sh
           sudo cp ./ldid /usr/local/bin
   
-      - name: 'update nocodb-timely'
-        env:
-          TAG: ${{ github.event.inputs.tag || inputs.tag }}
-        run: |
-          npm i -E nocodb-daily@$TAG
 
-          git config --global user.name "Pranav C"
-          git config --global user.email "pranavxc@gmail.com"
-
-          git commit package.json -m "Update to $TAG"
-          git tag $TAG
-          git push --tags
 
 
       - uses: actions/setup-node@v3
@@ -74,13 +60,6 @@ jobs:
       - name : Install dependencies and build executables
         run: |
           npm i
-          # npm i --target_arch=x64 --target_platform=darwin
-
-          # npx node-pre-gyp install --directory=./node_modules/sqlite3 --target_platform=win32 --target_arch=ia32
-          # npx node-pre-gyp install --directory=./node_modules/sqlite3 --target_platform=darwin --target_arch=x64
-          # npx node-pre-gyp install --directory=./node_modules/sqlite3 --target_platform=darwin --target_arch=arm
-          # npx node-pre-gyp install --directory=./node_modules/sqlite3 --target_platform=linux --target_arch=x64
-          # npx node-pre-gyp install --directory=./node_modules/sqlite3 --target_platform=linux --target_arch=arm
 
           # Copy sqlite binaries
           rsync -rvzhP ./binaries/binding/ ./node_modules/sqlite3/lib/binding/
@@ -103,10 +82,6 @@ jobs:
           mkdir ./mac-dist
           mv ./dist/Noco-macos-arm64 ./mac-dist/
           mv ./dist/Noco-macos-x64 ./mac-dist/
-          GZIP=-9 tar -czvf ./dist/Noco-linux-x64.tar.gz ./dist/Noco-linux-x64
-          GZIP=-9 tar -czvf ./dist/Noco-win-x64.tar.gz ./dist/Noco-win-x64.exe
-          GZIP=-9 tar -czvf ./dist/Noco-linux-arm64.tar.gz ./dist/Noco-linux-arm64
-          GZIP=-9 tar -czvf ./dist/Noco-win-arm64.tar.gz ./dist/Noco-win-arm64.exe
           
       - name: Upload executables to release
         uses: svenstaro/upload-release-action@v2
@@ -155,17 +130,28 @@ jobs:
           path: mac-dist
       - name: Compress files
         run: |
-          GZIP=-9 tar -czvf ./mac-dist/Noco-macos-x64.tar.gz ./mac-dist/Noco-macos-x64
-          GZIP=-9 tar -czvf ./mac-dist/Noco-macos-arm64.tar.gz ./mac-dist/Noco-macos-arm64
+          mv ./mac-dist/Noco-macos-x64 ./mac-dist/noco
+          tar -czf ./mac-dist/noco.tar.gz ./mac-dist/noco
+          echo "::set-output name=CHECKSUM::$(shasum -a 256 noco.tar.gz)"
+        id: compress
 
-      - name: Upload mac executables to release
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.NC_GITHUB_TOKEN }}
-          file: mac-dist/**
-          tag: ${{ github.event.inputs.tag || inputs.tag }}
-          overwrite: true
-          file_glob: true
-          repo_name: nocodb/nocodb-timely
+      - name: print 
+        run: |
+          MY_STRING=$(cat << EOF
+          class Getfilesize < Formula
+            desc "Get Human Readable file size information. - CLI"
+            homepage "https://github.com/bharathvaj-ganesan/getfilesize-cli"
+            url "https://github.com/bharathvaj-ganesan/getfilesize-cli/releases/download/v1.0.1/getfilesize.tar.gz"
+            sha256 "6c03100f5b1f8e61f5d49efab759a2efcdbcc4ac2677fcf98e7317ec660e6994"
+            license "MIT"
+            version "1.0.1"
+
+            def install
+              bin.install "getfilesize"
+            end
+          end
+          EOF
+          )
+          echo "$MY_STRING"
           
           
