@@ -87,15 +87,6 @@ jobs:
           mv ./dist/Noco-arm64 ./mac-dist/
           mv ./dist/Noco-x64 ./mac-dist/
           
-      - name: Upload executables to release
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.NC_GITHUB_TOKEN }}
-          file: dist/**
-          tag: ${{ github.event.inputs.tag || inputs.tag }}
-          overwrite: true
-          file_glob: true
-          
           
           
           
