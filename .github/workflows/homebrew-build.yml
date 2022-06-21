@@ -127,6 +127,7 @@ jobs:
     needs: sign
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - uses: actions/download-artifact@master
         with:
           name: executables
@@ -144,7 +145,7 @@ jobs:
           class Getfilesize < Formula
             desc "Get Human Readable file size information. - CLI"
             homepage "https://github.com/bharathvaj-ganesan/getfilesize-cli"
-            url "https://github.com/bharathvaj-ganesan/getfilesize-cli/releases/download/v1.0.1/noco.tar.gz"
+            url "https://github.com/pranavxc/nc-test-repo/releases/download/${{ github.event.inputs.tag || inputs.tag }}/noco.tar.gz"
             sha256 "${{ steps.compress.outputs.CHECKSUM }}"
             license "MIT"
             version "1.0.1"
@@ -155,8 +156,22 @@ jobs:
           end
           EOF
           )
-          printf "$FORMULA_CLASS_STR" >> noco.rb
+          printf "$FORMULA_CLASS_STR" >> Formula/noco.rb
           echo "${{ steps.compress.outputs.CHECKSUM }}"
-          cat noco.rb
           
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          
+          git commit Formula/noco.rb -m "Update formula"
+          git tag ${{ github.event.inputs.tag || inputs.tag }}
+          git push --tags
+          
+      - name: Upload mac executables to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.NC_GITHUB_TOKEN }}
+          file: mac-dist/**
+          tag: ${{ github.event.inputs.tag || inputs.tag }}
+          overwrite: true
+          file_glob: true
           
