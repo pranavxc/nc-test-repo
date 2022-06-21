@@ -12,8 +12,7 @@ on:
         required: true
 jobs:
   build:
-  
-    if: false
+
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -107,7 +106,6 @@ jobs:
           
   sign:
     
-    if: false
     runs-on: macos-latest
     needs: build
     steps:
@@ -127,7 +125,7 @@ jobs:
 
 
   publish:
-    # needs: sign
+    needs: sign
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
