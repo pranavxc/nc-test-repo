@@ -166,6 +166,14 @@ jobs:
           git tag ${{ github.event.inputs.tag || inputs.tag }}
           git push --tags
           
+          
+          git clone https://.:${{ secrets.NC_GITHUB_TOKEN }}@github.com/nocodb/homebrew-nocodb
+          \cp -f ./Formula/noco.rb ./homebrew-nocodb/Formula/noco.rb
+          cd homebrew-nocodb
+          git add .
+          git diff-index --quiet HEAD || git commit -m "Automatic publish"
+          git push target master
+          
       - name: Upload mac executables to release
         uses: svenstaro/upload-release-action@v2
         with:
