@@ -135,7 +135,7 @@ jobs:
         run: |
           mv ./mac-dist/Noco-x64 ./mac-dist/noco
           tar -czf ./mac-dist/noco.tar.gz ./mac-dist/noco
-          echo "::set-output name=CHECKSUM::$(shasum -a 256 ./mac-dist/noco.tar.gz)"
+          echo "::set-output name=CHECKSUM::$(shasum -a 256 ./mac-dist/noco.tar.gz | awk '{print $1}')"
         id: compress
 
       - name: print 
