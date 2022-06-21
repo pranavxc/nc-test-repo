@@ -137,6 +137,7 @@ jobs:
           path: 'homebrew-nocodb'
           token: ${{ secrets.NC_GITHUB_TOKEN }}
           repository: 'nocodb/homebrew-nocodb'
+          fetch-depth: 0
       - uses: actions/download-artifact@master
         with:
           name: executables
@@ -178,7 +179,7 @@ jobs:
           
           git commit Formula/noco.rb -m "Update formula"
           git tag ${{ github.event.inputs.tag || inputs.tag }}
-          git push origin master --tags
+          git push  --tags
           
           
           cd ../homebrew-nocodb
@@ -187,7 +188,7 @@ jobs:
           git config user.email 'github-actions[bot]@users.noreply.github.com'
           
           git commit ./Formula/noco.rb -m "Automatic publish"
-          git push origin master
+          git push
           
       - name: Upload mac executables to release
         uses: svenstaro/upload-release-action@v2
